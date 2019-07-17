@@ -28,6 +28,8 @@
         "symfony/yaml": "4.3.*"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.2",
+        "fzaninotto/faker": "^1.8",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",
@@ -64,7 +66,8 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "@php -r \"file_exists('.env.local') || copy('.env', '.env.local');\""
         ],
         "post-update-cmd": [
             "@auto-scripts"
