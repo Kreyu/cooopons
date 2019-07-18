@@ -1,0 +1,137 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+
+    {% set query = app.request.get('query') %}
+    {% set category_id = app.request.get('category') %}
+    {% set page = app.request.get('page', 1) %}
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    {% if total_items > 0 %}
+                        {% for coupon in paginator %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="blog-entry ftco-animate">
+                                        <div class="text pt-2 mt-5">
+                                            <span class="big">{{ coupon.brand.name }}</span>
+                                            <h3 class="mb-4">{{ coupon.name }}</h3>
+                                            <p class="mb-4">{{ coupon.description }}</p>
+                                            <div class="meta-wrap d-md-flex align-items-center">
+                                                <div class="half order-md-last text-md-right">
+                                                    <p class="meta">
+                                                        <span title="Times redeemed"><i class="icon-eye"></i>{{ coupon.timesSeen }}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="half">
+                                                    <p>
+                                                        <a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Redeem</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <div class="row mt-5">
+                            <div class="col text-center">
+                                <div class="block-27">
+                                    <ul>
+                                        {% if page > 1 %}
+                                            <li>
+                                                <a href="{{ path('search', { page: page - 1 < 1 ? 1 : page - 1 }) }}">&lt;</a>
+                                            </li>
+                                        {% endif %}
+
+                                        {% for i in 1..pages_count %}
+                                            <li {{ page == i ? 'class="active"' }}>
+                                                <a href="{{ path('search', { page: i }) }}">{{ i }}</a>
+                                            </li>
+                                        {% endfor %}
+
+                                        {% if page < pages_count %}
+                                            <li>
+                                                <a href="{{ path('search', { page: page + 1 <= total_items ? page + 1 : page }) }}">&gt;</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="blog-entry ftco-animate">
+                                    <div class="text pt-2 mt-4">
+                                        No coupons found :(
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-4 sidebar ftco-animate">
+                    <div class="sidebar-box mb-0">
+                        <form action="{{ path('search') }}" method="GET" class="search-form">
+                            <div class="form-group">
+                                <span class="icon icon-search"></span>
+                                <input type="text" class="form-control" name="query" id="search-autocomplete"
+                                       placeholder="Search by coupon, brand or the category" value="{{ query }}">
+                                <input type="hidden" name="category" value="{{ category_id }}">
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="sidebar-box ftco-animate">
+                        <h3 class="d-inline-block">Categories</h3>
+
+                        {% if category_id %}
+                            <form class="d-inline-block ml-1" action="{{ path('search') }}" method="GET">
+                                <input type="hidden" name="query" value="{{ query }}">
+                                <button class="btn btn-link p-0">x</button>
+                            </form>
+                        {% endif %}
+
+                        <ul class="categories">
+                            {% for brand_category in brand_categories %}
+                                {% set is_active = category_id == brand_category.id or query == brand_category.name %}
+                                <li>
+                                    <a href="{{ path('search', { query: query, category: brand_category.id }) }}"
+                                       {% if is_active %}class="font-weight-bold"{% endif %}>
+                                        {{ brand_category.name }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    {% if query or category_id %}
+                        <a href="{{ path('search') }}" class="btn btn-primary">Reset filters</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock body %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style>
+        .ftco-navbar-light .navbar-nav > .nav-item > .nav-link,
+        .ftco-navbar-light .navbar-nav > .nav-item > .nav-link:hover {
+            color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% include 'partials/search_autocomplete_scripts.html.twig' %}
+{% endblock javascripts %}

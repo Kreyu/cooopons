@@ -46,10 +46,30 @@ class Coupon extends Entity
     private $validTo;
 
     /**
+     * @var Brand
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Brand", inversedBy="coupons")
      * @ORM\JoinColumn(nullable=false)
      */
     private $brand;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $redeemCount = 0;
+
+    public function toArray()
+    {
+        return parent::toArray() + [
+            'name' => $this->name,
+            'description' => $this->description,
+            'code' => $this->code,
+            'validFrom' => $this->validFrom,
+            'validTo' => $this->validTo,
+        ];
+    }
 
     public function getName(): ?string
     {
@@ -106,10 +126,23 @@ class Coupon extends Entity
         return $this->brand;
     }
 
-    public function setBrand(?Brand $brand): self
+    public function setBrand(?Brand $brand): void
     {
         $this->brand = $brand;
+    }
 
-        return $this;
+    public function getRedeemCount(): int
+    {
+        return $this->redeemCount;
+    }
+
+    public function setRedeemCount(int $redeemCount): void
+    {
+        $this->redeemCount = $redeemCount;
+    }
+
+    public function incrementRedeemCount(int $quantity = 1): void
+    {
+        $this->redeemCount += $quantity;
     }
 }

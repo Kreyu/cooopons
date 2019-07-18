@@ -18,4 +18,13 @@ class BrandCategoryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, BrandCategory::class);
     }
+
+    public function findByNameLike(string $name)
+    {
+        return $this->createQueryBuilder('brand_category')
+            ->where('brand_category.name LIKE :name')
+            ->setParameter('name', '%'.$name.'%')
+            ->getQuery()
+            ->getResult();
+    }
 }

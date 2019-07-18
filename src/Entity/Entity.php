@@ -18,6 +18,13 @@ abstract class Entity implements EntityInterface
      */
     protected $id;
 
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+        ];
+    }
+
     public function getId(): ?int
     {
         return $this->id;

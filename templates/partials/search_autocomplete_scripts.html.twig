@@ -1,0 +1,12 @@
+<script>
+    $(document).ready(function () {
+        $('#search-autocomplete').autocomplete({
+            source: "{{ path('search_autocomplete') }}",
+            minLength: 2,
+        });
+
+        $('span.icon-search').on('click', function () {
+            this.closest('form').submit();
+        });
+    });
+</script>

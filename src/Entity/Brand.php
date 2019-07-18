@@ -28,7 +28,7 @@ class Brand extends Entity
     /**
      * @var BrandCategory|null
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\BrandCategory", inversedBy="brand")
+     * @ORM\ManyToOne(targetEntity="App\Entity\BrandCategory", inversedBy="brands")
      * @ORM\JoinColumn(nullable=true)
      */
     private $category;

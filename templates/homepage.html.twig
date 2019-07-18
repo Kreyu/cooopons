@@ -1,0 +1,44 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+
+    <section class="home-slider js-fullheight owl-carousel">
+        <div class="slider-item js-fullheight">
+            <div class="container-fluid">
+                <div class="row js-fullheight slider-text justify-content-center align-items-center"
+                     data-scrollax-parent="true">
+                    <div class="col-md-6 text ftco-animate">
+                        <div class="text-2">
+                            <span class="big">Cooo</span>
+                            <h1 class="mb-4">Cooopons</h1>
+                            <p class="mb-4">An easy way to save some coin.</p>
+
+                            <form action="{{ path('search') }}" method="GET" class="search-form p-0 mt-2 mb-4">
+                                <div class="form-group">
+                                    <span class="icon icon-search"></span>
+                                    <input id="search-autocomplete" type="text" class="form-control" name="query"
+                                           placeholder="Search by coupon, brand or the category">
+                                </div>
+                            </form>
+
+                            <div class="tagcloud">
+                                {% for brand_category in brand_categories %}
+                                    <a href="{{ path('search', { category: brand_category.id }) }}" class="tag-cloud-link">{{ brand_category.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 js-fullheight img" style="background-image: url(images/store.jpg);"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock body %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% include 'partials/search_autocomplete_scripts.html.twig' %}
+{% endblock javascripts %}
