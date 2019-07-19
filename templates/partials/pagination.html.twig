@@ -1,0 +1,24 @@
+{# @var paginator \Doctrine\ORM\Tools\Pagination\Paginator #}
+
+{% set total_items = paginator.count %}
+{% set pages_count = (paginator.count / paginator.query.maxResults)|round %}
+
+<ul>
+    {% if page > 1 %}
+        <li>
+            <a href="{{ path('search', { page: page - 1 < 1 ? 1 : page - 1 }) }}">&lt;</a>
+        </li>
+    {% endif %}
+
+    {% for i in 1..pages_count %}
+        <li {{ page == i ? 'class="active"' }}>
+            <a href="{{ path('search', { page: i }) }}">{{ i }}</a>
+        </li>
+    {% endfor %}
+
+    {% if page < pages_count %}
+        <li>
+            <a href="{{ path('search', { page: page + 1 <= total_items ? page + 1 : page }) }}">&gt;</a>
+        </li>
+    {% endif %}
+</ul>

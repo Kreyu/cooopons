@@ -68,6 +68,7 @@ class Coupon extends Entity
             'code' => $this->code,
             'validFrom' => $this->validFrom,
             'validTo' => $this->validTo,
+            'redeemCount' => $this->redeemCount,
         ];
     }
 

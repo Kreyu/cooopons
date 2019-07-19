@@ -1,5 +1,7 @@
 {% extends 'layouts/base.html.twig' %}
 
+{# @var paginator \Doctrine\ORM\Tools\Pagination\Paginator #}
+
 {% block body %}
     {{ parent() }}
 
@@ -11,8 +13,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    {% if total_items > 0 %}
+                    {% if paginator.count > 0 %}
                         {% for coupon in paginator %}
+                            {# @var coupon \App\Entity\Coupon #}
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="blog-entry ftco-animate">
@@ -22,14 +26,22 @@
                                             <p class="mb-4">{{ coupon.description }}</p>
                                             <div class="meta-wrap d-md-flex align-items-center">
                                                 <div class="half order-md-last text-md-right">
-                                                    <p class="meta">
-                                                        <span title="Times redeemed"><i class="icon-eye"></i>{{ coupon.timesSeen }}</span>
+                                                    <p class="meta" title="Times redeemed">
+                                                        <i class="icon-eye"></i>
+                                                        <span class="redeem-count">{{ coupon.redeemCount }}</span>
                                                     </p>
                                                 </div>
                                                 <div class="half">
-                                                    <p>
-                                                        <a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Redeem</a>
-                                                    </p>
+                                                    <div class="author mb-4 d-flex align-items-center">
+                                                        <a href="#" data-coupon-id="{{ coupon.id }}"
+                                                           class="btn btn-primary p-3 px-xl-4 py-xl-3 coupon-redeem">
+                                                            Redeem
+                                                        </a>
+                                                        <div class="ml-3 info coupon-code-section d-none">
+                                                            <span>Coupon code:</span>
+                                                            <h3 class="coupon-code">-</h3>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -41,25 +53,7 @@
                         <div class="row mt-5">
                             <div class="col text-center">
                                 <div class="block-27">
-                                    <ul>
-                                        {% if page > 1 %}
-                                            <li>
-                                                <a href="{{ path('search', { page: page - 1 < 1 ? 1 : page - 1 }) }}">&lt;</a>
-                                            </li>
-                                        {% endif %}
-
-                                        {% for i in 1..pages_count %}
-                                            <li {{ page == i ? 'class="active"' }}>
-                                                <a href="{{ path('search', { page: i }) }}">{{ i }}</a>
-                                            </li>
-                                        {% endfor %}
-
-                                        {% if page < pages_count %}
-                                            <li>
-                                                <a href="{{ path('search', { page: page + 1 <= total_items ? page + 1 : page }) }}">&gt;</a>
-                                            </li>
-                                        {% endif %}
-                                    </ul>
+                                    {% include 'partials/pagination.html.twig' with { paginator: paginator } %}
                                 </div>
                             </div>
                         </div>
@@ -134,4 +128,37 @@
     {{ parent() }}
 
     {% include 'partials/search_autocomplete_scripts.html.twig' %}
+
+    <script>
+        $(document).ready(function () {
+            $('a.coupon-redeem').on('click', function (e) {
+                e.preventDefault();
+
+                const button = $(this);
+                const couponId = $(this).data('coupon-id');
+                const redeemCounter = $(this).closest('.meta-wrap').find('.redeem-count');
+                const couponCodeSection = $(this).closest('.meta-wrap').find('.coupon-code-section');
+
+                $.ajax({
+                    url: getRedeemUrl(couponId),
+                    method: 'POST',
+                    success: function (data) {
+                        button.html('Redeemed');
+                        button.addClass('btn-outline-primary disabled');
+                        button.blur();
+
+                        redeemCounter.html(data['redeemCount']);
+
+                        couponCodeSection.removeClass('d-none');
+                        couponCodeSection.find('.coupon-code').html(data['code']);
+                    }
+                });
+            })
+        });
+
+        function getRedeemUrl(couponId) {
+            let url = "{{ path('redeem', { id: 0 }) }}";
+            return url.replace(0, couponId);
+        }
+    </script>
 {% endblock javascripts %}

@@ -43,15 +43,13 @@ class DefaultController extends AbstractController
         return $this->render('search.html.twig', [
             'brand_categories' => $brandCategories,
             'paginator' => $paginator,
-            'total_items' => $paginator->count(),
-            'pages_count' => ceil($paginator->count() / 10),
         ]);
     }
 
     /**
-     * @Route("/search-autocomplete", name="search_autocomplete")
+     * @Route("/autocomplete", name="search_autocomplete")
      */
-    public function searchAutocomplete(Request $request)
+    public function autocomplete(Request $request)
     {
         $items = [];
         $term = trim(strip_tags($request->get('term')));

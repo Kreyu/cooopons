@@ -1,5 +1,7 @@
 {% extends 'layouts/base.html.twig' %}
 
+{# @var brand_categories \App\Entity\BrandCategory[] #}
+
 {% block body %}
     {{ parent() }}
 
@@ -24,7 +26,8 @@
 
                             <div class="tagcloud">
                                 {% for brand_category in brand_categories %}
-                                    <a href="{{ path('search', { category: brand_category.id }) }}" class="tag-cloud-link">{{ brand_category.name }}</a>
+                                    <a href="{{ path('search', { category: brand_category.id }) }}"
+                                       class="tag-cloud-link">{{ brand_category.name }}</a>
                                 {% endfor %}
                             </div>
                         </div>
