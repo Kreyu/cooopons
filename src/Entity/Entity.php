@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Timestampable;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\MappedSuperclass()
  */
-abstract class Entity implements EntityInterface
+abstract class Entity implements EntityInterface, Timestampable
 {
+    use TimestampableEntity;
+
     /**
      * @var int
      *
@@ -22,6 +26,8 @@ abstract class Entity implements EntityInterface
     {
         return [
             'id' => $this->id,
+            'createdAt' => $this->createdAt,
+            'updatedAt' => $this->updatedAt,
         ];
     }
 

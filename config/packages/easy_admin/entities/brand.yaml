@@ -1,0 +1,34 @@
+easy_admin:
+    entities:
+        Brand:
+            class: App\Entity\Brand
+            label: brand.label
+            list:
+                title: brand.list.title
+                fields:
+                    - { property: id, label: brand.fields.id }
+                    - { property: name, label: brand.fields.name }
+                    - { property: description, label: brand.fields.description }
+                    - { property: category, label: brand.fields.category }
+                    - { property: createdAt, label: brand.fields.createdAt }
+                    - { property: updatedAt, label: brand.fields.updatedAt }
+            show:
+                fields:
+                    - { property: id, label: brand.fields.id }
+                    - { property: name, label: brand.fields.name }
+                    - { property: description, label: brand.fields.description }
+                    - { property: category, label: brand.fields.category }
+                    - { property: createdAt, label: brand.fields.createdAt }
+                    - { property: updatedAt, label: brand.fields.updatedAt }
+            new:
+                title: brand.new.title
+                fields:
+                    - { property: name, label: brand.fields.name }
+                    - { property: description, label: brand.fields.description }
+                    - { property: category, label: brand.fields.category }
+            edit:
+                title: brand.edit.title
+                fields:
+                    - { property: name, label: brand.fields.name }
+                    - { property: description, label: brand.fields.description }
+                    - { property: category, label: brand.fields.category }

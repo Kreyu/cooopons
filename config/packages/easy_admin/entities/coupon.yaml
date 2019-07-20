@@ -1,0 +1,50 @@
+easy_admin:
+    entities:
+        Coupon:
+            class: App\Entity\Coupon
+            label: coupon.label
+            list:
+                title: coupon.list.title
+                fields:
+                    - { property: id, label: coupon.fields.id }
+                    - { property: name, label: coupon.fields.name }
+                    - { property: description, label: coupon.fields.description }
+                    - { property: code, label: coupon.fields.code }
+                    - { property: validFrom, label: coupon.fields.validFrom }
+                    - { property: validTo, label: coupon.fields.validTo }
+                    - { property: brand, label: coupon.fields.brand, type: association }
+                    - { property: redeemCount, label: coupon.fields.redeemCount }
+                    - { property: createdAt, label: coupon.fields.createdAt }
+                    - { property: updatedAt, label: coupon.fields.updatedAt }
+            show:
+                fields:
+                    - { property: id, label: coupon.fields.id }
+                    - { property: name, label: coupon.fields.name }
+                    - { property: description, label: coupon.fields.description }
+                    - { property: code, label: coupon.fields.code }
+                    - { property: validFrom, label: coupon.fields.validFrom }
+                    - { property: validTo, label: coupon.fields.validTo }
+                    - { property: brand, label: coupon.fields.brand }
+                    - { property: redeemCount, label: coupon.fields.redeemCount }
+                    - { property: createdAt, label: coupon.fields.createdAt }
+                    - { property: updatedAt, label: coupon.fields.updatedAt }
+            new:
+                title: coupon.new.title
+                fields:
+                    - { property: name, label: coupon.fields.name }
+                    - { property: description, label: coupon.fields.description }
+                    - { property: code, label: coupon.fields.code }
+                    - { property: validFrom, label: coupon.fields.validFrom }
+                    - { property: validTo, label: coupon.fields.validTo }
+                    - { property: brand, label: coupon.fields.brand }
+                    - { property: redeemCount, label: coupon.fields.redeemCount }
+            edit:
+                title: coupon.edit.title
+                fields:
+                    - { property: name, label: coupon.fields.name }
+                    - { property: description, label: coupon.fields.description }
+                    - { property: code, label: coupon.fields.code }
+                    - { property: validFrom, label: coupon.fields.validFrom }
+                    - { property: validTo, label: coupon.fields.validTo }
+                    - { property: brand, label: coupon.fields.brand }
+                    - { property: redeemCount, label: coupon.fields.redeemCount }

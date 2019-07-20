@@ -1,0 +1,46 @@
+Coupon: Coupon
+Brand: Brand
+BrandCategory: Brand category
+
+coupon:
+    label: Coupon
+    fields:
+        id: Identifier
+        name: Name
+        description: Description
+        code: Code
+        validFrom: Valid from
+        validTo: Valid to
+        brand: Brand
+        redeemCount: Redeem count
+        createdAt: Created at
+        updatedAt: Updated at
+    list:
+        title: Coupons
+brand:
+    label: Brand
+    fields:
+        id: Identifier
+        name: Name
+        description: Description
+        category: Category
+        createdAt: Created at
+        updatedAt: Updated at
+    list:
+        title: Brands
+brand_category:
+    label: Brand category
+    fields:
+        id: Identifier
+        name: Name
+        createdAt: Created at
+        updatedAt: Updated at
+    list:
+        title: Brand categories
+action:
+    new: Add new
+    search: Search
+    edit: Edit
+    delete: Delete
+    cancel: Cancel
+    list: Return to list
