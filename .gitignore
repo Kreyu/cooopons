@@ -19,4 +19,5 @@
 
 ###> misc/ide ###
 .idea
+*/**/.DS_Store
 ###< misc/ide ###
